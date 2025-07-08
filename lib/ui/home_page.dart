@@ -53,6 +53,8 @@ class _HomePageState extends State<HomePage> {
                   itemCount: filteredSpells.length,
                   itemBuilder: (context, index) {
                     final spell = filteredSpells[index];
+                    String spellModifiers = "[${spell.isConcentration && spell.isBonusAction ? "C,B" : spell.isConcentration ? "C" : spell.isBonusAction ? "B" : ""}] ";
+
                     return Dismissible(
                       key: Key(spell.title),
                       direction: DismissDirection.endToStart,
@@ -66,7 +68,21 @@ class _HomePageState extends State<HomePage> {
                         await spellNotifier.removeSpell(spell);
                       },
                       child: ListTile(
-                        title: Text(spell.title),
+                      title: Text.rich(
+                        TextSpan(
+                          children: [
+                            if (spell.isConcentration || spell.isBonusAction)
+                              TextSpan(
+                                text: spellModifiers,
+                                style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                              ),
+                            TextSpan(
+                              text: spell.title,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
                         leading: Text(
                           "Lv ${spell.level}",
                           style: const TextStyle(

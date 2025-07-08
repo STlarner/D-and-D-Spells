@@ -17,6 +17,8 @@ class _AddSpellPageState extends State<AddSpellPage> {
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   int? _selectedLevel;
+  bool _isConcentration = false;
+  bool _isBonusAction = false;
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _AddSpellPageState extends State<AddSpellPage> {
       _titleController.text = widget.spell!.title;
       _descController.text = widget.spell!.description;
       _selectedLevel = widget.spell!.level;
+      _isConcentration = widget.spell!.isConcentration;
     }
   }
 
@@ -42,6 +45,8 @@ class _AddSpellPageState extends State<AddSpellPage> {
         title: _titleController.text.trim(),
         description: _descController.text.trim(),
         level: _selectedLevel!,
+        isConcentration: _isConcentration,
+        isBonusAction: _isBonusAction
       );
       if (widget.spell != null) {
         // Editing existing spell
@@ -111,6 +116,29 @@ class _AddSpellPageState extends State<AddSpellPage> {
                 validator: (value) =>
                     value == null ? 'You need to select a level' : null,
               ),
+
+              CheckboxListTile(
+                title: const Text('Concentration'),
+                value: _isConcentration,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isConcentration = value ?? false;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+
+              CheckboxListTile(
+                title: const Text('Bonus action'),
+                value: _isBonusAction,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isBonusAction = value ?? false;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+
               const SizedBox(height: 24),
             ],
           ),
