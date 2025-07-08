@@ -19,6 +19,7 @@ class _AddSpellPageState extends State<AddSpellPage> {
   int? _selectedLevel;
   bool _isConcentration = false;
   bool _isBonusAction = false;
+  
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _AddSpellPageState extends State<AddSpellPage> {
       _descController.text = widget.spell!.description;
       _selectedLevel = widget.spell!.level;
       _isConcentration = widget.spell!.isConcentration;
+      _isBonusAction = widget.spell!.isBonusAction;
     }
   }
 
